@@ -41,7 +41,40 @@ class ArtisController {
         try {
             const id = req.params.id;
 
-            const artisList = await ArtisModel.findOne({_id: id}, "name length")
+            const artisList = await ArtisModel.findOne({_id: id})
+            res.status(200).send(artisList);
+        } catch (error) {
+            res.status(500).send({err: error})
+        }
+    }
+
+    static async getArtisByCondition(req, res) {
+        try {
+            const name = req.params.name;
+            const genre = req.params.genre;
+
+            const artisList = await ArtisModel.find({name: name, genre:genre})
+            res.status(200).send(artisList);
+        } catch (error) {
+            res.status(500).send({err: error})
+        }
+    }
+
+    static async getArtisBySongs(req, res) {
+        try {
+            const songs = req.params.songs;
+        
+            const artisList = await ArtisModel.find({songs: songs})
+            res.status(200).send(artisList);
+        } catch (error) {
+            res.status(500).send({err: error})
+        }
+    }
+
+    static async getArtisByQueryParams(req, res) {
+        try {
+            const params = req.query;
+            const artisList = await ArtisModel.find(params)
             res.status(200).send(artisList);
         } catch (error) {
             res.status(500).send({err: error})
@@ -66,7 +99,23 @@ class ArtisController {
     }
 
     static async deleteArtis(req, res) {
-        res.send({msg: "ini controller delete artis"})
+        try {
+            const id = req.params.id;
+            await ArtisModel.deleteOne({_id: id})
+            res.status(200).send({message: `${id} has been Deleted`})
+        } catch (error) {
+            res.status(500).send({err: error})
+        }
+    }
+
+    static async deleteArtisByGenre(req, res) {
+        try {
+            const genre = req.params.genre;
+            await ArtisModel.deleteOne({genre: genre})
+            res.status(200).send({message: `${genre} has been Deleted`})
+        } catch (error) {
+            res.status(500).send({err: error})
+        }
     }
 }
 
