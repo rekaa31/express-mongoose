@@ -1,14 +1,20 @@
 const mongoose = require("mongoose")
 
-const opts = {
-    timestamps: true,
-}
-
 const artisSchema = new mongoose.Schema({
     name: {
         type: String,
     },
-}, opts)
+    genre: {
+        type: String,
+    },
+    songs: {
+        type: Array,
+        "default" : []
+    }
+}, {
+    timestamps: true,
+    versionKey : false
+})
 
 
 const ArtisModel = mongoose.model("Artis", artisSchema)

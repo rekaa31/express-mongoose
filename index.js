@@ -9,15 +9,15 @@ const openDBConnection = require("./helpers/db")
 
 const port = process.env.PORT || 3000
 const uri = process.env.MONGO_URI
-const dbOptions = {
-    user: process.env.MONGO_USER,
-    pass: process.env.MONGO_PASS
-}
+// const dbOptions = {
+//     user: process.env.MONGO_USER,
+//     pass: process.env.MONGO_PASS
+// }
 
 async function main() {
     try {
         // mastikan database connect, baru kita jalankan app.
-        await openDBConnection(uri, dbOptions)
+        await openDBConnection(uri)
 
         const app = express()
 

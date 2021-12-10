@@ -16,7 +16,9 @@ class ArtisController {
             const body = req.body;
 
             const name = body.name;
-            const artis = new ArtisModel({name: name})
+            const genre = body.genre;
+            const songs = body.songs;
+            const artis = new ArtisModel({name: name, genre: genre, songs: songs})
         
             const saved = await artis.save()
             res.status(201).send(saved);
@@ -39,7 +41,7 @@ class ArtisController {
         try {
             const id = req.params.id;
 
-            const artisList = await ArtisModel.findOne({_id: id})
+            const artisList = await ArtisModel.findOne({_id: id}, "name length")
             res.status(200).send(artisList);
         } catch (error) {
             res.status(500).send({err: error})
@@ -47,7 +49,20 @@ class ArtisController {
     }
 
     static async updateArtis(req, res) {
-        res.send({msg: "ini controller untuk update artis"})
+        try {
+            // Ambil ID dari parameter
+            const id = req.params.id;
+
+            // Ambil data dari Body
+            const body = req.body;
+            const genre = body.genre;
+
+            // Proses Update Data
+            await ArtisModel.updateOne({_id: id}, {genre: genre})
+            res.status(200).send({message: "Success"})
+        } catch (error) {
+            res.status(500).send({err: error})
+        }
     }
 
     static async deleteArtis(req, res) {
