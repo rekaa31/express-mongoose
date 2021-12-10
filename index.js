@@ -20,6 +20,9 @@ async function main() {
         await openDBConnection(uri, dbOptions)
 
         const app = express()
+
+        app.use(express.json()) // biar kita bisa ambil request body.
+
         app.use(routes)
 
         app.listen(port, () => {
